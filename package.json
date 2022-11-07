@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:all": "npm -w packages/backend run lint:nowarnings && npx -w packages/frontend eslint . --max-warnings=0",
+    "build:all": "npm -w packages/backend run build && npm -w packages/frontend run build",
+    "test:all": "npm -w packages/backend run test && npm -w packages/frontend run test",
+    "prepare": "husky install"
   },
   "workspaces": [
     "./packages/frontend",
@@ -12,5 +16,8 @@
   ],
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
 }

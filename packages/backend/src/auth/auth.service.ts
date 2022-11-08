@@ -8,9 +8,19 @@ export class AuthService {
 
   async validateUser(username: string, inputPassword: string): Promise<any> {
     const user = await this.usersService.findOneByUsername(username);
-    if (user && comparePassword(inputPassword, user.password)) {
-      delete user.password;
-      return user;
+    if (user) {
+      try {
+        const passwordMatches = await comparePassword(
+          inputPassword,
+          user.password,
+        );
+        if (passwordMatches) {
+          delete user.password;
+          return user;
+        }
+      } catch (error) {
+        return null;
+      }
     }
     return null;
   }

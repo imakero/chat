@@ -6,6 +6,7 @@ import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { MessagesModule } from './messages/messages.module';
+import { Message } from './typeorm/entities/Message';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { MessagesModule } from './messages/messages.module';
         username: 'root',
         password: process.env.MYSQL_ROOT_PASSWORD,
         database: 'chat',
-        entities: [User],
+        entities: [User, Message],
         synchronize: true,
       }),
     }),

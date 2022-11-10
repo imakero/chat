@@ -13,6 +13,11 @@ export class MessagesService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
+
+  async findAll() {
+    return this.messageRepository.find({ relations: ['user'] });
+  }
+
   async create(userId: number, message: CreateMessageParams) {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {

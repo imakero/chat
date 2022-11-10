@@ -1,4 +1,4 @@
-import { Field, FieldInputProps, FieldProps } from "formik";
+import { Field, FieldProps } from "formik";
 import {
   Input as ChakraInput,
   InputProps as ChakraInputProps,

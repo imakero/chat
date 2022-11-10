@@ -21,6 +21,10 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
+  findOne(id: number): Promise<User> {
+    return this.userRepository.findOne({ where: { id } });
+  }
+
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }

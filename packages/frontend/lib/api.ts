@@ -41,3 +41,26 @@ export const getMessages = async () => {
     console.error(error);
   }
 };
+
+type messageParams = {
+  text: string;
+};
+
+export const sendMessage = async (message: messageParams) => {
+  try {
+    const token = localStorage.getItem("chat-jwt-token");
+
+    if (!token) {
+      return null;
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const res = await axios.post<Message>("/messages", message, { headers });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

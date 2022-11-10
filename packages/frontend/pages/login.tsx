@@ -1,14 +1,14 @@
 import {
-  Box,
   Button,
   Container,
-  Flex,
   FormControl,
   FormLabel,
   Heading,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import Link from "../components/link";
 import Input from "../components/form/input";
 
 type Values = {
@@ -47,6 +47,13 @@ const Login = () => {
           <Button type="submit" w="100%" mt={4} colorScheme="teal">
             Ok
           </Button>
+          <Text>
+            Don&apos;t have an account? Go to the{" "}
+            <Link href="/signup" color="teal">
+              sign up
+            </Link>{" "}
+            page.
+          </Text>
         </VStack>
       </Formik>
     </Container>

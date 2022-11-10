@@ -2,6 +2,7 @@ import {
   Button,
   Container,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Text,
@@ -10,6 +11,8 @@ import {
 import { Form, Formik } from "formik";
 import Link from "../components/link";
 import Input from "../components/form/input";
+import { login } from "../lib/api";
+import { useRouter } from "next/router";
 
 type Values = {
   username: string;
@@ -17,6 +20,8 @@ type Values = {
 };
 
 const Login = () => {
+  const router = useRouter();
+
   return (
     <Container
       maxW="sm"
@@ -31,30 +36,42 @@ const Login = () => {
           username: "",
           password: "",
         }}
-        onSubmit={(values: Values) => console.log(values)}
+        onSubmit={async (values: Values, { setSubmitting, setFieldError }) => {
+          if (await login(values)) {
+            setSubmitting(false);
+            router.push("/");
+          } else {
+            setFieldError("password", "Password and username did not match.");
+            setFieldError("username", "Password and username did not match.");
+          }
+        }}
       >
-        <VStack as={Form} alignItems="start">
-          <Heading mb={4}>Log in</Heading>
+        {({ errors }) => (
+          <VStack as={Form} alignItems="start">
+            <Heading mb={4}>Log in</Heading>
 
-          <FormControl>
-            <FormLabel>Username</FormLabel>
-            <Input name="username" type="text" />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Password</FormLabel>
-            <Input name="password" type="password" />
-          </FormControl>
-          <Button type="submit" w="100%" mt={4} colorScheme="teal">
-            Ok
-          </Button>
-          <Text>
-            Don&apos;t have an account? Go to the{" "}
-            <Link href="/signup" color="teal">
-              sign up
-            </Link>{" "}
-            page.
-          </Text>
-        </VStack>
+            <FormControl isInvalid={!!errors?.username}>
+              <FormLabel>Username</FormLabel>
+              <Input name="username" type="text" />
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={!!errors?.password}>
+              <FormLabel>Password</FormLabel>
+              <Input name="password" type="password" />
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            </FormControl>
+            <Button type="submit" w="100%" mt={4} colorScheme="teal">
+              Ok
+            </Button>
+            <Text>
+              Don&apos;t have an account? Go to the{" "}
+              <Link href="/signup" color="teal">
+                sign up
+              </Link>{" "}
+              page.
+            </Text>
+          </VStack>
+        )}
       </Formik>
     </Container>
   );

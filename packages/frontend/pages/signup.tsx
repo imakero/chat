@@ -8,15 +8,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import Link from "../components/link";
 import Input from "../components/form/input";
+import Link from "../components/link";
 
 type Values = {
   username: string;
+  email: string;
   password: string;
 };
 
-const Login = () => {
+const Signup = () => {
   return (
     <Container
       maxW="sm"
@@ -29,16 +30,21 @@ const Login = () => {
       <Formik
         initialValues={{
           username: "",
+          email: "",
           password: "",
         }}
         onSubmit={(values: Values) => console.log(values)}
       >
         <VStack as={Form} alignItems="start">
-          <Heading mb={4}>Log in</Heading>
+          <Heading mb={4}>Sign up</Heading>
 
           <FormControl>
             <FormLabel>Username</FormLabel>
             <Input name="username" type="text" />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+            <Input name="email" type="email" />
           </FormControl>
           <FormControl>
             <FormLabel>Password</FormLabel>
@@ -48,9 +54,9 @@ const Login = () => {
             Ok
           </Button>
           <Text>
-            Don&apos;t have an account? Go to the{" "}
-            <Link href="/signup" color="teal">
-              sign up
+            Already have an account? Go to the{" "}
+            <Link href="/login" color="teal">
+              login
             </Link>{" "}
             page.
           </Text>
@@ -60,4 +66,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

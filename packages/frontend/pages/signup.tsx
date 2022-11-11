@@ -8,8 +8,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import Input from "../components/form/input";
 import Link from "../components/link";
+import { register } from "../lib/api";
 
 type Values = {
   username: string;
@@ -18,6 +20,7 @@ type Values = {
 };
 
 const Signup = () => {
+  const router = useRouter();
   return (
     <Container
       maxW="sm"
@@ -33,7 +36,13 @@ const Signup = () => {
           email: "",
           password: "",
         }}
-        onSubmit={(values: Values) => console.log(values)}
+        onSubmit={async (values: Values, { setSubmitting }) => {
+          try {
+            await register({ ...values });
+            setSubmitting(false);
+            router.push("/login");
+          } catch (error) {}
+        }}
       >
         <VStack as={Form} alignItems="start">
           <Heading mb={4}>Sign up</Heading>

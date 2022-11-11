@@ -20,6 +20,17 @@ export const login = async (credentials: Credentials) => {
   }
 };
 
+type RegisterParams = {
+  username: string;
+  email: string;
+  password: string;
+};
+
+export const register = async (userDetails: RegisterParams) => {
+  const res = await axios.post("/users", userDetails);
+  return res.data;
+};
+
 export const getMessages = async () => {
   try {
     const res = await axios.get<Message[]>("/messages", {});

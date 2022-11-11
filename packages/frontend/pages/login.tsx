@@ -41,8 +41,14 @@ const Login = () => {
             setSubmitting(false);
             router.push("/");
           } else {
-            setFieldError("password", "Password and username did not match.");
-            setFieldError("username", "Password and username did not match.");
+            setFieldError(
+              "password",
+              "Password and/or username did not match."
+            );
+            setFieldError(
+              "username",
+              "Password and/or username did not match."
+            );
           }
         }}
       >

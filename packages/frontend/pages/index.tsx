@@ -15,8 +15,8 @@ export default function Home() {
 
   const router = useRouter();
 
-  const [eventSource, eventSourceStatus] = useEventSource(
-    "http://localhost:4000/sse",
+  const [eventSource] = useEventSource(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/sse`,
     true
   );
 

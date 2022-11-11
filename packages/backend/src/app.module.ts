@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { MessagesModule } from './messages/messages.module';
 import { Message } from './typeorm/entities/Message';
+import { SseModule } from './sse/sse.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { Message } from './typeorm/entities/Message';
     UsersModule,
     AuthModule,
     MessagesModule,
+    SseModule,
   ],
   controllers: [AppController],
   providers: [],

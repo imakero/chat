@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import ChatInput from "../components/chat-input";
 import MessageBox from "../components/message-box";
 import * as api from "../lib/api";
-import { parseJwt } from "../lib/parse-jwt";
 import { Message } from "../lib/types";
 import { useEventSourceListener, useEventSource } from "../lib/event-source";
 

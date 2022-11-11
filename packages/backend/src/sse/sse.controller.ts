@@ -1,5 +1,5 @@
 import { Controller, Sse, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { SseService } from './sse.service';
 
 @Controller('sse')

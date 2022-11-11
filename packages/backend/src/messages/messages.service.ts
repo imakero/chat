@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SseService } from 'src/sse/sse.service';
-import { Message } from 'src/typeorm/entities/Message';
-import { User } from 'src/typeorm/entities/User';
+import { SseService } from '../sse/sse.service';
+import { Message } from '../typeorm/entities/Message';
+import { User } from '../typeorm/entities/User';
 import { Repository } from 'typeorm';
 import { CreateMessageParams } from './types';
 

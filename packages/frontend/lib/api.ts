@@ -32,12 +32,8 @@ export const register = async (userDetails: RegisterParams) => {
 };
 
 export const getMessages = async () => {
-  try {
-    const res = await axios.get<Message[]>("/messages", {});
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
+  const res = await axios.get<Message[]>("/messages", {});
+  return res.data;
 };
 
 type messageParams = {
@@ -45,10 +41,6 @@ type messageParams = {
 };
 
 export const sendMessage = async (message: messageParams) => {
-  try {
-    const res = await axios.post<Message>("/messages", message);
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
+  const res = await axios.post<Message>("/messages", message);
+  return res.data;
 };

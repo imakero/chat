@@ -14,7 +14,7 @@ import { Message } from './typeorm/entities/Message';
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'mysql',
-        host: 'localhost',
+        host: process.env.MYSQL_HOST,
         port: 3306,
         username: 'root',
         password: process.env.MYSQL_ROOT_PASSWORD,

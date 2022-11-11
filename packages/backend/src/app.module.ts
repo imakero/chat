@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './typeorm/entities/User';
@@ -7,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { MessagesModule } from './messages/messages.module';
 import { Message } from './typeorm/entities/Message';
+import { SseModule } from './sse/sse.module';
 
 @Module({
   imports: [
@@ -26,8 +26,9 @@ import { Message } from './typeorm/entities/Message';
     UsersModule,
     AuthModule,
     MessagesModule,
+    SseModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

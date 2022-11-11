@@ -1,14 +1,15 @@
 import { Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { Message } from "../lib/types";
+import Cookies from "js-cookie";
 
 type Props = {
   message: Message;
-  userId: number;
 };
 
-const MessageBox = ({ message, userId }: Props) => {
+const MessageBox = ({ message }: Props) => {
   const timeStamp = new Date(message.postedAt).toLocaleString();
-  const isUser = message.user.id === userId;
+  const isUser = message.user.id === parseInt(Cookies.get("userId") || "-1");
+
   return (
     <VStack
       bg={isUser ? "teal.600" : "pink.600"}

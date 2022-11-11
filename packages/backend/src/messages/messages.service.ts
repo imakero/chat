@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SseService } from 'src/sse/sse.service';
 import { Message } from 'src/typeorm/entities/Message';
 import { User } from 'src/typeorm/entities/User';
 import { Repository } from 'typeorm';
@@ -12,6 +13,7 @@ export class MessagesService {
     private messageRepository: Repository<Message>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private sseService: SseService,
   ) {}
 
   async findAll() {
@@ -31,6 +33,8 @@ export class MessagesService {
       postedAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
       user,
     });
-    return this.messageRepository.save(newMessage);
+    const savedMessage = await this.messageRepository.save(newMessage);
+    this.sseService.addEvent({ data: savedMessage, type: 'message' });
+    return savedMessage;
   }
 }

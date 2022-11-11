@@ -20,6 +20,10 @@ export class MessagesController {
     @Req() req: JwtRequest,
     @Body() createMessageDto: CreateMessageDto,
   ) {
-    return await this.messagesService.create(req.user.id, createMessageDto);
+    const message = await this.messagesService.create(
+      req.user.id,
+      createMessageDto,
+    );
+    return message;
   }
 }

@@ -5,31 +5,40 @@ import { useEffect, useRef, useState } from "react";
 import ChatInput from "../components/chat-input";
 import MessageBox from "../components/message-box";
 import * as api from "../lib/api";
-import { parseJwt } from "../lib/parse-jwt";
 import { Message } from "../lib/types";
+import { useEventSourceListener, useEventSource } from "../lib/event-source";
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [userId, setUserId] = useState<number>(-1);
   const messageContainerRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
-  const getMessages = async () => {
-    const messages = await api.getMessages();
-    if (messages) {
-      setMessages(messages);
-    }
-  };
+  const [eventSource] = useEventSource(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/sse`,
+    true
+  );
+
+  useEventSourceListener(
+    eventSource as EventSource,
+    ["message"],
+    ({ data }) => {
+      setMessages((oldMessages) => [...oldMessages, JSON.parse(data)]);
+    },
+    [setMessages]
+  );
 
   useEffect(() => {
-    const token = localStorage.getItem("chat-jwt-token");
-    if (!token) {
-      router.push("/login");
-    } else {
-      setUserId(parseJwt(token).sub);
-    }
-
+    const getMessages = async () => {
+      try {
+        const messages = await api.getMessages();
+        if (messages) {
+          setMessages(messages);
+        }
+      } catch (e) {
+        router.push("/login");
+      }
+    };
     getMessages();
   }, [router]);
 
@@ -39,10 +48,6 @@ export default function Home() {
         messageContainerRef.current.scrollHeight;
     }
   }, [messages]);
-
-  const onSend = async () => {
-    await getMessages();
-  };
 
   return (
     <Container maxW="lg" h="100vh">
@@ -61,11 +66,11 @@ export default function Home() {
           ref={messageContainerRef}
         >
           {messages.map((message) => (
-            <MessageBox key={message.id} message={message} userId={userId} />
+            <MessageBox key={message.id} message={message} />
           ))}
         </VStack>
         <Box w="100%" pb={4}>
-          <ChatInput onSend={onSend} />
+          <ChatInput />
         </Box>
       </VStack>
     </Container>
